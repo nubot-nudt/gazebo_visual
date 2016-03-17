@@ -1,11 +1,13 @@
 # Note: This is for SIMULATION. The following packages should be used together:
-1. gazebo_visual		# for gazebo visulization
-2. nubot_ws			# for real robot code
-3. coach_ws_no_rtdb		# for sending game command such as kickoff to robots; this does not require rtdb
-    The recommended way to run simulation is with two computers running nubot_ws and gazebo_visual seperately. For example, computer A runs gazebo_visual to display the movement of robots. Computer B runs nubot_ws to calculate and send movement commands to robots. In addition, computer B should also run coach to send game command such as game start. 
-    The communication between computer A and computer B is via ROS master. The following is the configuration steps:
+1. gazebo_visual		            # for gazebo visulization
+2. nubot_ws			                # for real robot code
+3. coach_ws_no_rtdb		            # for sending game command such as kickoff to robots; this does not require rtdb
 
 # Configuration of computer A and computer B
+
+>   The recommended way to run simulation is with two computers running nubot_ws and gazebo_visual seperately.For example,computer A runs gazebo_visual to display the movement of robots. Computer B runs nubot_ws to calculate and send  movement commands to robots. In addition, computer B should also run coach to send game command such as game start. 
+>   The communication between computer A and computer B is via ROS master. The following is the configuration steps:
+    
 1. In computer A, add computer B's IP address in /etc/hosts; and in computer B, add computer A's IP address in /etc/hosts
 e.g. In computer A, $ sudo gedit /etc/hosts and add "Maggie 192.168.8.100"
      In computer B, $ sudo gedit /etc/hosts and add "Bart   192.168.8.101"
