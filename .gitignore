@@ -1,0 +1,15 @@
+## Ignore build files
+build/
+devel/
+
+## Ignore camera calibration files
+# /src/nubot/omni_vision/calib_results/*
+
+## Ignore PID parameters
+# /src/nubot/nubot_hwcontroller/cfg/controller.cfg
+
+*.jpg
+*.bmp
+CMakeLists.txt.*
+*~
+*.tar.gz
