@@ -103,7 +103,7 @@ namespace gazebo{
         nubot_common::RobotInfo       robot_info_;
         nubot_common::ObstaclesInfo   obstacles_info_;
         nubot_common::OminiVisionInfo omin_vision_info_;
-        common::Time                  receive_sim_time_;
+        //common::Time                  receive_sim_time_;
         std_msgs::Float64MultiArray   debug_msgs_;
 
         math::Vector3               desired_rot_vector_;

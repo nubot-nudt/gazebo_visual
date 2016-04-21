@@ -236,7 +236,7 @@ bool RivalGazebo::update_model_info(void)
     // Depends on nubot hardware configuration
    if(ModelStatesCB_flag_)
    {
-        receive_sim_time_ = world_->GetSimTime();
+        //receive_sim_time_ = world_->GetSimTime();
 #if 1 // no Gaussian noise
         // Get football and nubot's pose and twist
         football_state_.model_name = football_name_ ;
@@ -368,6 +368,7 @@ bool RivalGazebo::update_model_info(void)
                                           robot_pose.orientation.y, robot_pose.orientation.z);
                 double heading_theta = rot_qua.GetYaw();
                 robot_info_.header.seq++;
+                robot_info_.header.stamp = ros::Time::now();
                 robot_info_.AgentID       = robot_id;
                 robot_info_.pos.x         = -robot_pose.position.x * M2CM_CONVERSION;
                 robot_info_.pos.y         = -robot_pose.position.y * M2CM_CONVERSION;
@@ -393,12 +394,12 @@ bool RivalGazebo::update_model_info(void)
 
 void RivalGazebo::message_publish(void)
 {
-    ros::Time simulation_time(receive_sim_time_.sec, receive_sim_time_.nsec);
-    math::Quaternion    rotation_quaternion=nubot_state_.pose.orientation;
+    //ros::Time simulation_time(receive_sim_time_.sec, receive_sim_time_.nsec);
+    //math::Quaternion    rotation_quaternion=nubot_state_.pose.orientation;
 
     ////////////// OminiVision message /////////////////////////
 
-    ball_info_.header.stamp = simulation_time;
+    ball_info_.header.stamp = ros::Time::now();
     ball_info_.header.seq++;
     //ball_info_.ballinfostate =
     ball_info_.pos.x =  football_state_.pose.position.x * M2CM_CONVERSION;
@@ -431,7 +432,7 @@ void RivalGazebo::message_publish(void)
         obstacles_info_.pos.push_back(point);
         obstacles_info_.polar_pos.push_back(polar_point);
     }
-    omin_vision_info_.header.stamp = robot_info_.header.stamp;
+    omin_vision_info_.header.stamp = ros::Time::now();
     omin_vision_info_.header.seq++;
     omin_vision_info_.ballinfo=ball_info_;
     omin_vision_info_.obstacleinfo=obstacles_info_;
