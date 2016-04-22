@@ -17,6 +17,7 @@
 #define CM2M_CONVERSION 0.01
 #define M2CM_CONVERSION 100
 
+enum {NOTSEEBALL = 0, SEEBALLBYOWN = 1,SEEBALLBYOTHERS = 2};
 const math::Vector3 kick_vector_nubot(1,0,0);    // Normalized vector from origin to kicking mechanism in nubot refercence frame.
                                                  // It is subject to nubot model file
 const double goal_x = 9.0;
@@ -410,7 +411,7 @@ void NubotGazebo::message_publish(void)
     // ROS_INFO("Gazebo is publishing Omnivision Info!");
     ball_info_.header.stamp = ros::Time::now();
     ball_info_.header.seq++;
-    //ball_info_.ballinfostate =
+    ball_info_.ballinfostate = SEEBALLBYOWN;
     ball_info_.pos.x =  football_state_.pose.position.x * M2CM_CONVERSION;
     ball_info_.pos.y =  football_state_.pose.position.y * M2CM_CONVERSION;
     ball_info_.real_pos.angle  = get_angle_PI(kick_vector_world_,nubot_football_vector_);
@@ -499,7 +500,8 @@ bool NubotGazebo::ball_handle_control_service(nubot_common::BallHandle::Request 
         else
         {
             //ROS_INFO("%s dribble_service: dribbling ball now", model_name_.c_str());
-            //res.BallIsHolding = true;
+            dribble_flag_  = true;
+            res.BallIsHolding = true;
         }
     }
     else
@@ -507,7 +509,7 @@ bool NubotGazebo::ball_handle_control_service(nubot_common::BallHandle::Request 
         res.BallIsHolding = get_is_hold_ball();
     }
 
-    //ROS_FATAL("%s dribble:[enable holding]:[%d %d]",model_name_.c_str(), (int)req.enable, (int)res.BallIsHolding);
+    ROS_FATAL("%s dribble:[enable holding]:[%d %d]",model_name_.c_str(), (int)req.enable, (int)res.BallIsHolding);
     srvCB_lock_.unlock();
     return true;
 }

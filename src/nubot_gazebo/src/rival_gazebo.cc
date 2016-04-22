@@ -17,6 +17,7 @@
 #define CM2M_CONVERSION 0.01
 #define M2CM_CONVERSION 100
 
+enum {NOTSEEBALL = 0, SEEBALLBYOWN = 1,SEEBALLBYOTHERS = 2};
 const math::Vector3 kick_vector_nubot(-1,0,0);    // Normalized vector from origin to kicking mechanism in nubot refercence frame.
                                                  // It is subject to nubot model file
 const double goal_x = 9.0;
@@ -401,7 +402,7 @@ void RivalGazebo::message_publish(void)
 
     ball_info_.header.stamp = ros::Time::now();
     ball_info_.header.seq++;
-    //ball_info_.ballinfostate =
+    ball_info_.ballinfostate = SEEBALLBYOWN;
     ball_info_.pos.x =  football_state_.pose.position.x * M2CM_CONVERSION;
     ball_info_.pos.y =  football_state_.pose.position.y * M2CM_CONVERSION;
     ball_info_.real_pos.angle  = get_angle_PI(kick_vector_world_,nubot_football_vector_);
