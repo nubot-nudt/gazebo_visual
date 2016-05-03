@@ -18,6 +18,7 @@ rosrun gazebo_ros spawn_model -file $(rospack find nubot_description)/models/foo
                               -model ${football_name} \
                               -x 0.0 -y 0.0 -z 0.0 \
                                /
+sleep 1
 
 ### spawn cyan robots
 for ((i=1; i<=cyan_num; ++i))
@@ -38,4 +39,8 @@ do
                                   -x ${magenta_x[$i]} -y ${magenta_y[$i]} -z 0.0 &
     sleep 0.5
 done 
+
+
+### use joystick
+rosrun joy joy_node &
 

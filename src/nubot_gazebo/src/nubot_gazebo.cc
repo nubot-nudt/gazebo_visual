@@ -749,7 +749,7 @@ void NubotGazebo::update_child()
     if(ball_decay_flag_)
     {
         math::Vector3 free_ball_vel = football_state_.twist.linear;
-        ball_vel_decay(free_ball_vel, 0.3);
+        ball_vel_decay(free_ball_vel, 0.05);
     }
     ball_decay_flag_ = true;
 
@@ -779,8 +779,8 @@ void NubotGazebo::nubot_be_control(void)
 
 void NubotGazebo::detect_ball_out(void)
 {
-    if(fabs(football_state_.pose.position.x)>field_length_/2.0+1 ||
-            fabs(football_state_.pose.position.y)> field_width_/2.0+1)
+    if(fabs(football_state_.pose.position.x)>field_length_/2.0+5 ||
+            fabs(football_state_.pose.position.y)> field_width_/2.0+5)
     {
         football_model_->SetLinearVel(ZERO_VECTOR);
         int a = football_state_.pose.position.x > 0? 1 : -1;
