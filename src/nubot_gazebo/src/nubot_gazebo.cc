@@ -746,13 +746,14 @@ void NubotGazebo::update_child()
         /**********  EDIT ENDS  **********/
     }
 
+#if 0       // use <velocity_decay> in model.sdf instead
     if(ball_decay_flag_)
     {
         math::Vector3 free_ball_vel = football_state_.twist.linear;
         ball_vel_decay(free_ball_vel, 0.05);
     }
     ball_decay_flag_ = true;
-
+#endif
     srvCB_lock_.unlock();
     msgCB_lock_.unlock();
 }
