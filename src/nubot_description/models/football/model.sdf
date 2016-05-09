@@ -6,9 +6,9 @@
 <model name='football'>
       <static>0</static>
       <link name='ball'>
-		<velocity_decay>
+                <!-- velocity_decay>
 			<linear>0.01</linear>
-		</velocity_decay>
+                </velocity_decay -->
         <inertial>
           <mass>0.41</mass>
           <inertia>
