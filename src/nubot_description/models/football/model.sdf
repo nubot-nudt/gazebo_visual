@@ -6,9 +6,9 @@
 <model name='football'>
       <static>0</static>
       <link name='ball'>
-                <!-- velocity_decay>
-			<linear>0.01</linear>
-                </velocity_decay -->
+        <!-- velocity_decay>
+					<linear>0.01</linear>
+        </velocity_decay -->
         <inertial>
           <mass>0.41</mass>
           <inertia>
@@ -35,7 +35,7 @@
 		      <torsional>
 		        <coefficient>1.0</coefficient>
 		        <use_patch_radius>true</use_patch_radius>
-				<patch_radius>0.05</patch_radius>
+						<patch_radius>0.05</patch_radius>
 		      </torsional>
 			  <ode>
 				<mu>1</mu>
