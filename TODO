@@ -4,3 +4,6 @@ Welcome anyone to add somthing to this list or pick some items from it and contr
 2. Since rolling friction is not supported by ODE, manually adding force is added in nubot_gazebo.cc. However, it would be better to move this part to the model plugin of the soccer ball. (easy)
 3. Add a physical simulation model for kicking mechanism.  (hard)
 4. Add a physical simulation model for dribble mechanism.  (hard) 
+5. show role labels beside each robot; show the positioning points; (medium)
+6. improve detect_ball_out();    (easy)
+7. set up a virtule runtime environment; refer to Matlab's support for RoboCup; (hard)
