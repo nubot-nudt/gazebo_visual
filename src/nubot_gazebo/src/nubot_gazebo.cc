@@ -764,7 +764,12 @@ void NubotGazebo::nubot_be_control(void)
     if(nubot_state_.pose.position.z < 0.2)      // not in the air
     {
         if(dribble_flag_)                       // dribble_flag_ is set by BallHandle service
-             dribble_ball();
+        {
+            if(get_is_hold_ball())
+                dribble_ball();
+            else
+                dribble_flag_ = false;
+        }
 
         if(shot_flag_)
         {
