@@ -6,9 +6,6 @@
 <model name='football'>
       <static>0</static>
       <link name='ball'>
-        <!-- velocity_decay>
-					<linear>0.01</linear>
-        </velocity_decay -->
         <inertial>
           <mass>0.41</mass>
           <inertia>
@@ -28,9 +25,9 @@
           </geometry>
           <surface>
             <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
+              <restitution_coefficient>0.05</restitution_coefficient>
+              <threshold>2</threshold>
             </bounce>
-			
             <friction>
 		      <torsional>
 		        <coefficient>1.0</coefficient>
@@ -43,7 +40,9 @@
 			  </ode>
             </friction>
             <contact>
-              <ode/>
+              <ode>
+                 <max_vel>5</max_vel>
+              </ode>
             </contact>
           </surface>
         </collision>
@@ -59,7 +58,6 @@
           <linear>0</linear>
           <angular>0</angular>
         </velocity_decay>
-        <gravity>1</gravity>
       </link>
       <pose>0 0 0 0 -0 0</pose>
 
