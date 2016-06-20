@@ -216,16 +216,6 @@ namespace gazebo{
         /// \brief Dynmaic recofigure calback function
         void config(nubot_gazebo::NubotGazeboConfig &config, uint32_t level);
 
-        /// \brief A work-around for no rolling-friction in ODE
-        /// \param[in] vel football's current 3D velocity
-        /// \param[in] mu friction coefficient
-        void ball_vel_decay(math::Vector3 vel, double mu);
-
-        /// \brief Replace football_model_->SetLinearVel() with a flag to indicate vel decay
-        /// \param[in] vel                  football's desired 3D velocity
-        /// \param[out] ball_decay_flag     flag to indicate whether or not the slow down football
-        void set_ball_vel(math::Vector3 &vel, bool &ball_decay_flag);
-
         /// \brief Detect whether ball is out of the field and put it in a specific position
         void detect_ball_out(void);
 

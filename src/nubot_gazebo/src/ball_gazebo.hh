@@ -23,16 +23,23 @@ namespace gazebo{
     private:
 
         physics::WorldPtr           world_;             // A pointer to the gazebo world.
-        physics::ModelPtr           ball_model_;       // Pointer to the model
+        physics::ModelPtr           football_model_;       // Pointer to the model
 
         ros::NodeHandle*            rosnode_;           // A pointer to the ROS node.
         ros::Subscriber             joy_sub_;
         event::ConnectionPtr        update_connection_;         // Pointer to the update event connection
+        std::string                 football_chassis_;
+        physics::LinkPtr            football_link_;     //Pointer to the football link
 
         double                      vel_x_;
         double                      vel_y_;
+        double                      mu_;                // frictional coefficient
 
+        /// \brief joystick callback function
         void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
+        /// \brief a work-around for rolling frction
+        /// \param[in] mu   --  friction coefficient
+        void ball_vel_decay(double mu);
 
     public:
         /// \brief Constructor. Will be called firstly

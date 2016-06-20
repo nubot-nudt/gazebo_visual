@@ -587,7 +587,7 @@ void NubotGazebo::dribble_ball(void)
     nubot_football_vector_.z = 0;                             // don't point to the air
     math::Vector3     perpencular_vel = nubot_angular_vel.Cross(nubot_football_vector_);
     math::Vector3     football_vel = nubot_linear_vel + perpencular_vel;
-    set_ball_vel(football_vel, ball_decay_flag_);
+    football_model_->SetLinearVel(football_vel);
 
     ROS_INFO("%s dribble_ball(): dribbling ball. ball vel:%f %f", model_name_.c_str(),football_vel.x, football_vel.y);
 #endif
@@ -602,7 +602,7 @@ void NubotGazebo::kick_ball(int mode, double vel=20.0)
    {
         double vel2 = vel * 2.3;;                         //FIXME. CAN TUNE
         math::Vector3 vel_vector = kick_vector_planar * vel2;
-        set_ball_vel(vel_vector, ball_decay_flag_);
+        football_model_->SetLinearVel(vel_vector);
         ROS_INFO("kick ball vel:%f vel2:%f",vel, vel2);
    }
    else if(mode == FLY)
@@ -630,7 +630,7 @@ void NubotGazebo::kick_ball(int mode, double vel=20.0)
         if( fabs(crosspoint.y_) < 10)
         {
             math::Vector3 kick_vector(vx*kick_vector_world_.x, vx*kick_vector_world_.y, b*vx);
-            set_ball_vel(kick_vector, ball_decay_flag_);
+            football_model_->SetLinearVel(kick_vector);
         }
         else
             ROS_FATAL("CANNOT SHOOT. crosspoint.y is too big!");
@@ -747,15 +747,6 @@ void NubotGazebo::update_child()
 
         /**********  EDIT ENDS  **********/
     }
-
-
-    if(ball_decay_flag_)
-    {
-        math::Vector3 free_ball_vel = football_state_.twist.linear;
-        ball_vel_decay(free_ball_vel, 0.05);
-    }
-    ball_decay_flag_ = true;
-
     srvCB_lock_.unlock();
     msgCB_lock_.unlock();
 }
@@ -811,37 +802,6 @@ bool NubotGazebo::is_robot_valid(double x, double y)
         return true;
 }
 
-void NubotGazebo::ball_vel_decay(math::Vector3 vel, double mu)
-{
-    static double last_vel_len = vel.GetLength();
-    double vel_len = vel.GetLength();
-
-    if(vel_len > 0.0)
-    {
-        if(football_state_.pose.position.z <= 0.12 &&
-                !(last_vel_len - vel_len > 0) )
-        {
-            static double force = -mu*m*g;
-            football_link_->AddForce(vel.Normalize()*force);
-        }
-    }
-    else if(vel_len < 0)
-    {
-        vel_len = 0.0;
-        vel = ZERO_VECTOR;
-        set_ball_vel(vel, ball_decay_flag_);
-    }
-
-    last_vel_len = vel_len;
-}
-
-void NubotGazebo::set_ball_vel(math::Vector3 &vel, bool &ball_decay_flag)
-{
-    football_model_->SetLinearVel(vel);
-    ball_decay_flag_ = false;                        // setting linear vel to ball indicates it is not free rolling
-                                                    // so no additional friction is applied now
-}
-
 void NubotGazebo::nubot_test(void)
 {
 // dribble ball
@@ -871,7 +831,7 @@ void NubotGazebo::nubot_test(void)
     math::Vector3 vel(3,0,0);
     if(count++<50)
     {
-        set_ball_vel(vel, ball_decay_flag_);
+        football_model_->SetLinearVel(vel);
         nubot_model_->SetLinearVel(math::Vector3(2,0,0));
     }
     debug_msgs_.data.clear();
