@@ -1,11 +1,9 @@
 Welcome anyone to add somthing to this list or pick some items from it and contribute to this code.
 
 1. Add a GUI to configure parameters, e.g. robot numbers, model path, etc. (medium)
-2. Since rolling friction is not supported by ODE, manually adding force is added in nubot_gazebo.cc. However, it would be better to move this part to the model plugin of the soccer ball. (medium)
-3. Add a physical simulation model for kicking mechanism.  (hard)
-4. Add a physical simulation model for dribble mechanism.  (hard) 
-5. show role labels beside each robot; show the positioning points; (medium)
-6. improve detect_ball_out();    (easy)
-7. set up a virtule runtime environment; refer to Matlab's support for RoboCup; (hard)
-8. Add ball bouncing;	(easy)
-9. automatic referee. (medium)
+2. Add a physical simulation model for kicking mechanism.  (hard)
+3. Add a physical simulation model for dribble mechanism.  (hard) 
+4. show role labels beside each robot; show the positioning points; (medium)
+5. improve detect_ball_out();    (easy)
+6. set up a virtule runtime environment; refer to Matlab's support for RoboCup; (hard)
+7. automatic referee. (hard)

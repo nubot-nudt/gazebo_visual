@@ -30,6 +30,9 @@ void BallGazebo::Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
     football_model_ = _parent;
     rosnode_ = new ros::NodeHandle();
     rosnode_->param("/football/chassis_link",  football_chassis_,   std::string("football::ball") );
+    rosnode_->param("/field/length",           field_length_,      18.0);
+    rosnode_->param("/field/width",            field_width_,       12.0);
+
 
     football_link_ = football_model_->GetLink(football_chassis_);
     if(!football_link_)
@@ -50,11 +53,12 @@ void BallGazebo::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 void BallGazebo::UpdateChild()
 {
     static math::Vector3 ball_vel(0, 0, 0);
+
+    detect_ball_out();
     if(std::sqrt(vel_x_*vel_x_+vel_y_*vel_y_)>1)
     {
       ball_vel.Set(vel_x_, vel_y_, 0);
       football_model_->SetLinearVel(ball_vel);
-//      ROS_WARN("vel_x_%f vel_y_:%f",vel_x_, vel_y_);
     }
     rosnode_->param("/general/ball_decay_coef", mu_, 0.5);
     ball_vel_decay(mu_);
@@ -76,11 +80,45 @@ void BallGazebo::ball_vel_decay(double mu)
             football_link_->AddForce(vel.Normalize()*force);
         }
     }
-    else if(vel_len < 0)
+    else if(vel_len <= 0.0)
     {
         vel_len = 0.0;
         football_model_->SetLinearVel(math::Vector3::Zero);
     }
 
     last_vel_len = vel_len;
+}
+
+void BallGazebo::detect_ball_out(void)
+{
+    double pos_x = football_model_->GetWorldPose().pos.x;
+    double pos_y = football_model_->GetWorldPose().pos.y;
+    int a = pos_x > 0? 1 : -1;
+    int b = pos_y > 0? 1 : -1;
+#if 1
+    if(fabs(pos_x)>field_length_/2.0)
+    {
+        math::Pose  target_pose( math::Vector3 (a*(field_length_/2.0-0.02), pos_y, 0.12), math::Quaternion(0,0,0) );
+        football_model_->SetWorldPose(target_pose);
+        football_model_->SetLinearVel(math::Vector3::Zero);
+    }
+    else if(fabs(pos_y) > field_width_/2.0)
+    {
+        math::Pose  target_pose( math::Vector3 (pos_x, b*(field_width_/2.0 - 0.02), 0.12), math::Quaternion(0,0,0) );
+        football_model_->SetWorldPose(target_pose);
+        football_model_->SetLinearVel(math::Vector3::Zero);
+    }
+
+#else       // easy
+    if(fabs(pos_x)>field_length_/2.0+5 ||fabs(pos_y)> field_width_/2.0+5)
+    {
+        int a = pos_x > 0? 1 : -1;
+        int b = pos_y > 0? 1 : -1;
+        double new_x = a * (field_length_/2.0 + 0.5);
+        double new_y = b * (field_width_/2.0 + 0.5);
+        math::Pose  target_pose( math::Vector3 (new_x, new_y, 0.12), math::Quaternion(0,0,0) );
+        football_model_->SetWorldPose(target_pose);
+        football_model_->SetLinearVel(math::Vector3::Zero);
+    }
+#endif
 }

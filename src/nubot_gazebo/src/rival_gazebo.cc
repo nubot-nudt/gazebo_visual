@@ -733,7 +733,6 @@ void RivalGazebo::update_child()
     {
         /********** EDIT BEGINS **********/
 
-        detect_ball_out();
         nubot_be_control();
         // nubot_test();
 
@@ -762,21 +761,6 @@ void RivalGazebo::nubot_be_control(void)
         ROS_FATAL("%s in the air!",model_name_.c_str());
 
     message_publish();                          // publish message to world_model node
-}
-
-void RivalGazebo::detect_ball_out(void)
-{
-    if(fabs(football_state_.pose.position.x)>field_length_/2.0+1 ||
-            fabs(football_state_.pose.position.y)> field_width_/2.0+1)
-    {
-        football_model_->SetLinearVel(ZERO_VECTOR);
-        int a = football_state_.pose.position.x > 0? 1 : -1;
-        int b = football_state_.pose.position.y > 0? 1 : -1;
-        double new_x = a * (field_length_/2.0 + 0.5);
-        double new_y = b * (field_width_/2.0 + 0.5);
-        math::Pose  target_pose( math::Vector3 (new_x, new_y, 0), math::Quaternion(0,0,0) );
-        football_model_->SetWorldPose(target_pose);
-    }
 }
 
 bool RivalGazebo::is_robot_valid(double x, double y)

@@ -741,7 +741,6 @@ void NubotGazebo::update_child()
     {
         /********** EDIT BEGINS **********/
 
-        detect_ball_out();
         nubot_be_control();
         // nubot_test();
 
@@ -777,21 +776,6 @@ void NubotGazebo::nubot_be_control(void)
         ROS_FATAL("%s in the air!",model_name_.c_str());
 
     message_publish();                          // publish message to world_model node
-}
-
-void NubotGazebo::detect_ball_out(void)
-{
-    if(fabs(football_state_.pose.position.x)>field_length_/2.0+5 ||
-            fabs(football_state_.pose.position.y)> field_width_/2.0+5)
-    {
-        football_model_->SetLinearVel(ZERO_VECTOR);
-        int a = football_state_.pose.position.x > 0? 1 : -1;
-        int b = football_state_.pose.position.y > 0? 1 : -1;
-        double new_x = a * (field_length_/2.0 + 0.5);
-        double new_y = b * (field_width_/2.0 + 0.5);
-        math::Pose  target_pose( math::Vector3 (new_x, new_y, 0), math::Quaternion(0,0,0) );
-        football_model_->SetWorldPose(target_pose);
-    }
 }
 
 bool NubotGazebo::is_robot_valid(double x, double y)

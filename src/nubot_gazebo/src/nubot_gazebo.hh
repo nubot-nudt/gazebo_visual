@@ -216,9 +216,6 @@ namespace gazebo{
         /// \brief Dynmaic recofigure calback function
         void config(nubot_gazebo::NubotGazeboConfig &config, uint32_t level);
 
-        /// \brief Detect whether ball is out of the field and put it in a specific position
-        void detect_ball_out(void);
-
         /// \brief in real world, this flag is determined by the status of power; however, in
         /// simulation, if the robot beyond the green border(carpet), it is not valid.
         /// \param[in]  x,y  x and y component of robot's position

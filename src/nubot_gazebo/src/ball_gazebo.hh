@@ -34,12 +34,18 @@ namespace gazebo{
         double                      vel_x_;
         double                      vel_y_;
         double                      mu_;                // frictional coefficient
+        double                      field_length_;
+        double                      field_width_;
 
         /// \brief joystick callback function
         void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
+
         /// \brief a work-around for rolling frction
         /// \param[in] mu   --  friction coefficient
         void ball_vel_decay(double mu);
+
+        /// \brief Detect whether ball is out of the field and put it in a specific position
+        void detect_ball_out(void);
 
     public:
         /// \brief Constructor. Will be called firstly
