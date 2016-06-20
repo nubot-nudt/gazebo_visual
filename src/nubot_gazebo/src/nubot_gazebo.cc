@@ -385,7 +385,8 @@ bool NubotGazebo::update_model_info(void)
                 robot_info_.heading.theta = heading_theta;
                 robot_info_.vrot          = robot_twist.angular.z;
                 robot_info_.vtrans.x      = robot_twist.linear.x * M2CM_CONVERSION;
-                robot_info_.isvalid       = true;
+                //robot_info_.isvalid       = true;
+                robot_info_.isvalid       =  is_robot_valid(robot_pose.position.x, robot_pose.position.y);
                 robot_info_.vtrans.y      = robot_twist.linear.y * M2CM_CONVERSION;
                 robot_info_.isstuck       = get_nubot_stuck();
                 omin_vision_info_.robotinfo.push_back(robot_info_);
@@ -509,7 +510,7 @@ bool NubotGazebo::ball_handle_control_service(nubot_common::BallHandle::Request 
         res.BallIsHolding = get_is_hold_ball();
     }
 
-    ROS_FATAL("%s dribble:[enable holding]:[%d %d]",model_name_.c_str(), (int)req.enable, (int)res.BallIsHolding);
+    //ROS_FATAL("%s dribble:[enable holding]:[%d %d]",model_name_.c_str(), (int)req.enable, (int)res.BallIsHolding);
     srvCB_lock_.unlock();
     return true;
 }
@@ -567,6 +568,7 @@ void NubotGazebo::dribble_ball(void)
     math::Vector3       relative_pos = kick_vector_world_* 0.43;
     math::Vector3       target_pos = nubot_model_->GetWorldPose().pos+ relative_pos;
     math::Pose          target_pose(target_pos, target_rot);
+    football_model_->SetLinearVel(math::Vector3(0,0,0));
     football_model_->SetWorldPose(target_pose);
     football_state_.twist.linear = nubot_state_.twist.linear;
 #endif
@@ -763,13 +765,16 @@ void NubotGazebo::nubot_be_control(void)
     static int count=0;
     if(nubot_state_.pose.position.z < 0.2)      // not in the air
     {
-        if(dribble_flag_)                       // dribble_flag_ is set by BallHandle service
-        {
-            if(get_is_hold_ball())
-                dribble_ball();
-            else
-                dribble_flag_ = false;
-        }
+        //if(dribble_flag_)                       // dribble_flag_ is set by BallHandle service
+        //{
+        //    if(get_is_hold_ball())
+        //        dribble_ball();
+        //    else
+        //        dribble_flag_ = false;
+        //}
+
+       if(dribble_flag_ && get_is_hold_ball())                       // dribble_flag_ is set by BallHandle service
+             dribble_ball();
 
         if(shot_flag_)
         {
@@ -796,6 +801,14 @@ void NubotGazebo::detect_ball_out(void)
         math::Pose  target_pose( math::Vector3 (new_x, new_y, 0), math::Quaternion(0,0,0) );
         football_model_->SetWorldPose(target_pose);
     }
+}
+
+bool NubotGazebo::is_robot_valid(double x, double y)
+{
+    if(fabs(x) > 10 || fabs(y) > 7)
+        return false;
+    else
+        return true;
 }
 
 void NubotGazebo::ball_vel_decay(math::Vector3 vel, double mu)

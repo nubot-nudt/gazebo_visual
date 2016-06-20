@@ -223,6 +223,12 @@ namespace gazebo{
         /// \brief Detect whether ball is out of the field and put it in a specific position
         void detect_ball_out(void);
 
+        /// \brief in real world, this flag is determined by the status of power; however, in
+        /// simulation, if the robot beyond the green border(carpet), it is not valid.
+        /// \param[in]  x,y  x and y component of robot's position
+        /// \param[out] if robot is valid, return true, otherwise return false
+        bool is_robot_valid(double x, double y);
+
     public:        
         /// \brief Constructor. Will be called firstly
         RivalGazebo();

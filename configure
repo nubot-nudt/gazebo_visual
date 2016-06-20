@@ -3,5 +3,6 @@
 find . -type f -exec sudo chmod -x '{}' \;
 find . -type f -name '*.cfg' -exec sudo chmod +x '{}' \;
 find . -type f -name '*.sh' -exec sudo chmod +x '{}' \;
+git update-index --assume-unchanged src/nubot_gazebo/config/global_config.yaml
 sudo chmod +x configure
 
