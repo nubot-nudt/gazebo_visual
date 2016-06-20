@@ -95,7 +95,7 @@ void BallGazebo::detect_ball_out(void)
     double pos_y = football_model_->GetWorldPose().pos.y;
     int a = pos_x > 0? 1 : -1;
     int b = pos_y > 0? 1 : -1;
-#if 1
+
     if(fabs(pos_x)>field_length_/2.0)
     {
         math::Pose  target_pose( math::Vector3 (a*(field_length_/2.0-0.02), pos_y, 0.12), math::Quaternion(0,0,0) );
@@ -108,17 +108,4 @@ void BallGazebo::detect_ball_out(void)
         football_model_->SetWorldPose(target_pose);
         football_model_->SetLinearVel(math::Vector3::Zero);
     }
-
-#else       // easy
-    if(fabs(pos_x)>field_length_/2.0+5 ||fabs(pos_y)> field_width_/2.0+5)
-    {
-        int a = pos_x > 0? 1 : -1;
-        int b = pos_y > 0? 1 : -1;
-        double new_x = a * (field_length_/2.0 + 0.5);
-        double new_y = b * (field_width_/2.0 + 0.5);
-        math::Pose  target_pose( math::Vector3 (new_x, new_y, 0.12), math::Quaternion(0,0,0) );
-        football_model_->SetWorldPose(target_pose);
-        football_model_->SetLinearVel(math::Vector3::Zero);
-    }
-#endif
 }

@@ -104,7 +104,7 @@ void RivalGazebo::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   std::string sub_str = model_name_.substr(nubot_prefix_.size(),model_name_.size()-nubot_prefix_.size());    // get the robot id
   const char *environment=sub_str.c_str();
   AgentID_ = atoi(environment);
-  ROS_FATAL(" %s has %d plugins, my id is :%d",model_name_.c_str(), nubot_model_->GetPluginCount(), AgentID_);
+  ROS_INFO(" %s has %d plugins, my id is :%d",model_name_.c_str(), nubot_model_->GetPluginCount(), AgentID_);
 
   // Load the football model 
   football_model_ = world_->GetModel(football_name_);
