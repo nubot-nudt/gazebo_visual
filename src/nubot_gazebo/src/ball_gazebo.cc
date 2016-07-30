@@ -39,6 +39,7 @@ void BallGazebo::Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
         ROS_ERROR("link [%s] does not exist!", football_chassis_.c_str());
 
     joy_sub_ =rosnode_->subscribe<sensor_msgs::Joy>("joy", 2, &BallGazebo::joyCallback, this);
+
     update_connection_ = event::Events::ConnectWorldUpdateBegin(
         boost::bind(&BallGazebo::UpdateChild, this));
 }

@@ -27,11 +27,6 @@
           </geometry>
 
           <surface>
-            <bounce>
-              <restitution_coefficient>0.05</restitution_coefficient>
-              <threshold>10</threshold>
-            </bounce>
-
             <friction>
               <torsional>
                 <coefficient>1.0</coefficient>
@@ -43,12 +38,6 @@
                 <mu2>1</mu2>
               </ode>
             </friction>
-
-            <contact>
-              <ode>
-                 <max_vel>5</max_vel>
-              </ode>
-            </contact>
           </surface>
         </collision>
 

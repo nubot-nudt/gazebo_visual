@@ -510,7 +510,7 @@ bool NubotGazebo::ball_handle_control_service(nubot_common::BallHandle::Request 
         res.BallIsHolding = get_is_hold_ball();
     }
 
-    //ROS_FATAL("%s dribble:[enable holding]:[%d %d]",model_name_.c_str(), (int)req.enable, (int)res.BallIsHolding);
+    ROS_FATAL("%s dribble:[enable holding]:[%d %d]",model_name_.c_str(), (int)req.enable, (int)res.BallIsHolding);
     srvCB_lock_.unlock();
     return true;
 }
@@ -567,6 +567,8 @@ void NubotGazebo::dribble_ball(void)
     kick_vector_world_ = RotationMatrix3 * kick_vector_nubot;
     math::Vector3       relative_pos = kick_vector_world_* 0.43;
     math::Vector3       target_pos = nubot_model_->GetWorldPose().pos+ relative_pos;
+    target_pos.z = 0.12;
+    //ROS_INFO("target pos:%f %f %f",target_pos.x, target_pos.y, target_pos.z);
     math::Pose          target_pose(target_pos, target_rot);
     football_model_->SetLinearVel(math::Vector3(0,0,0));
     football_model_->SetWorldPose(target_pose);

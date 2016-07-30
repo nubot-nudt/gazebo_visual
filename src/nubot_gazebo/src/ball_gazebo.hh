@@ -8,6 +8,8 @@
 // #include <gazebo/transport/TransportTypes.hh>
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/common/Events.hh>
+#include <gazebo_msgs/ContactState.h>
+#include <gazebo_msgs/ContactsState.h>
 
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
