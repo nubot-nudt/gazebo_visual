@@ -110,6 +110,7 @@ namespace gazebo{
         math::Vector3               desired_trans_vector_;
         math::Vector3               nubot_football_vector_;
         math::Vector3               kick_vector_world_;
+        math::Rand                  rand_;
         std::string                 robot_namespace_;   // robot namespace. Not used yet.
         std::string                 model_name_;
         std::string                 football_name_;
@@ -221,6 +222,12 @@ namespace gazebo{
         /// \param[in]  x,y  x and y component of robot's position
         /// \param[out] if robot is valid, return true, otherwise return false
         bool is_robot_valid(double x, double y);
+
+        /// \brief return a value representing real world noise. The noise complies with Normal(gaussian) distribution
+        /// with mean 0 and derivation 1, that is noise~N(0,1)
+        /// \param[in] scale            the magnitude of the noise is within [0, scale]
+        /// \param[in] probability      the probability of generating noise, probability should be in [0,1]
+        double  noise(double scale, double probability=0.01);
 
     public:        
         /// \brief Constructor. Will be called firstly

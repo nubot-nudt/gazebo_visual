@@ -285,43 +285,6 @@ bool NubotGazebo::update_model_info(void)
         nubot_state_.twist.angular.x    = model_states_msg_.twist[nubot_index_].angular.x;
         nubot_state_.twist.angular.y    = model_states_msg_.twist[nubot_index_].angular.y;
         nubot_state_.twist.angular.z    = model_states_msg_.twist[nubot_index_].angular.z;
-#endif
-#if 0 // add gaussian noise
-        static double scalar = 0.0167;
-        football_state_.model_name = football_name_ ;
-        football_state_.pose.position.x     =  model_states_msg_.pose[football_index_].position.x + scalar*rand_.GetDblNormal(0,1);
-        football_state_.pose.position.y     =  model_states_msg_.pose[football_index_].position.y + scalar*rand_.GetDblNormal(0,1);
-        football_state_.pose.position.z     =  model_states_msg_.pose[football_index_].position.z;
-//        football_state_.pose.orientation.w  =  model_states_msg_.pose[football_index_].orientation.w;
-//        football_state_.pose.orientation.x  =  model_states_msg_.pose[football_index_].orientation.x;
-//        football_state_.pose.orientation.y  =  model_states_msg_.pose[football_index_].orientation.y;
-//        football_state_.pose.orientation.z  =  model_states_msg_.pose[football_index_].orientation.z;
-        football_state_.twist.linear.x      =  model_states_msg_.twist[football_index_].linear.x + scalar*rand_.GetDblNormal(0,1);
-        football_state_.twist.linear.y      =  model_states_msg_.twist[football_index_].linear.y + scalar*rand_.GetDblNormal(0,1);
-        football_state_.twist.linear.z      =  model_states_msg_.twist[football_index_].linear.z;
-//        football_state_.twist.angular.x     =  model_states_msg_.twist[football_index_].angular.x;
-//        football_state_.twist.angular.y     =  model_states_msg_.twist[football_index_].angular.y;
-//        football_state_.twist.angular.z     =  model_states_msg_.twist[football_index_].angular.z;
-
-        nubot_state_.model_name = model_name_ ;
-        nubot_state_.pose.position.x    =  model_states_msg_.pose[nubot_index_].position.x + scalar*rand_.GetDblNormal(0,1);
-        nubot_state_.pose.position.y    =  model_states_msg_.pose[nubot_index_].position.y + scalar*rand_.GetDblNormal(0,1);
-        nubot_state_.pose.position.z    =  model_states_msg_.pose[nubot_index_].position.z;
-        nubot_state_.pose.orientation.w =  model_states_msg_.pose[nubot_index_].orientation.w;
-        nubot_state_.pose.orientation.x =  model_states_msg_.pose[nubot_index_].orientation.x;
-        nubot_state_.pose.orientation.y =  model_states_msg_.pose[nubot_index_].orientation.y;
-        nubot_state_.pose.orientation.z =  model_states_msg_.pose[nubot_index_].orientation.z;
-        nubot_state_.twist.linear.x     =  model_states_msg_.twist[nubot_index_].linear.x + scalar*rand_.GetDblNormal(0,1);
-        nubot_state_.twist.linear.y     =  model_states_msg_.twist[nubot_index_].linear.y + scalar*rand_.GetDblNormal(0,1);
-        nubot_state_.twist.linear.z     =  model_states_msg_.twist[nubot_index_].linear.z;
-        nubot_state_.twist.angular.x    =  model_states_msg_.twist[nubot_index_].angular.x;
-        nubot_state_.twist.angular.y    =  model_states_msg_.twist[nubot_index_].angular.y;
-        nubot_state_.twist.angular.z    =  model_states_msg_.twist[nubot_index_].angular.z + scalar*rand_.GetDblNormal(0,1);
-
-        debug_msgs_.data.clear();
-        debug_msgs_.data.push_back(scalar*rand_.GetDblNormal(0,1));
-        debug_pub_.publish(debug_msgs_);
-#endif
 
         // calculate vector from nubot to football
         nubot_football_vector_ = football_state_.pose.position - nubot_state_.pose.position;
@@ -351,13 +314,14 @@ bool NubotGazebo::update_model_info(void)
             if(model_states_msg_.name[i].compare(0, nubot_prefix_.size(), nubot_prefix_) == 0 ||
                     model_states_msg_.name[i].compare(0, rival_prefix_.size(), rival_prefix_) == 0)   //compare model name' prefix to determine robots
             {
+                math::Vector3 obstacle_position(model_states_msg_.pose[i].position.x,
+                                                model_states_msg_.pose[i].position.y,
+                                                model_states_msg_.pose[i].position.z);
                 if(i != nubot_index_)
                 {
-                    obstacles_->world_obstacles_.push_back(nubot::DPoint(model_states_msg_.pose[i].position.x,
-                                                                         model_states_msg_.pose[i].position.y));
-                    math::Vector3 obstacle_position(model_states_msg_.pose[i].position.x,
-                                                    model_states_msg_.pose[i].position.y,
-                                                    model_states_msg_.pose[i].position.z);
+                    obstacles_->world_obstacles_.push_back(nubot::DPoint(obstacle_position.x,
+                                                                         obstacle_position.y));
+
                     math::Vector3 nubot_obstacle_vector = obstacle_position - nubot_state_.pose.position;   // vector from nubot to obstacle
                     obstacles_->real_obstacles_.push_back( nubot::PPoint( get_angle_PI(kick_vector_world_,nubot_obstacle_vector),
                                                                           nubot_obstacle_vector.GetLength()) );
@@ -393,14 +357,123 @@ bool NubotGazebo::update_model_info(void)
 
             }
         }
-
         return 1;
+#else // add gaussian noise
+        static double scale = 0.10;
+        football_state_.model_name = football_name_ ;
+        football_state_.pose.position.x     =  model_states_msg_.pose[football_index_].position.x + noise(scale);
+        football_state_.pose.position.y     =  model_states_msg_.pose[football_index_].position.y + noise(scale);
+        football_state_.pose.position.z     =  model_states_msg_.pose[football_index_].position.z;
+        football_state_.twist.linear.x      =  model_states_msg_.twist[football_index_].linear.x;
+        football_state_.twist.linear.y      =  model_states_msg_.twist[football_index_].linear.y;
+        football_state_.twist.linear.z      =  model_states_msg_.twist[football_index_].linear.z;
+
+        nubot_state_.model_name = model_name_ ;
+        nubot_state_.pose.position.x    =  model_states_msg_.pose[nubot_index_].position.x;
+        nubot_state_.pose.position.y    =  model_states_msg_.pose[nubot_index_].position.y;
+        nubot_state_.pose.position.z    =  model_states_msg_.pose[nubot_index_].position.z;
+        nubot_state_.pose.orientation.w =  model_states_msg_.pose[nubot_index_].orientation.w;
+        nubot_state_.pose.orientation.x =  model_states_msg_.pose[nubot_index_].orientation.x;
+        nubot_state_.pose.orientation.y =  model_states_msg_.pose[nubot_index_].orientation.y;
+        nubot_state_.pose.orientation.z =  model_states_msg_.pose[nubot_index_].orientation.z;
+        nubot_state_.twist.linear.x     =  model_states_msg_.twist[nubot_index_].linear.x;
+        nubot_state_.twist.linear.y     =  model_states_msg_.twist[nubot_index_].linear.y;
+        nubot_state_.twist.linear.z     =  model_states_msg_.twist[nubot_index_].linear.z;
+        nubot_state_.twist.angular.x    =  model_states_msg_.twist[nubot_index_].angular.x;
+        nubot_state_.twist.angular.y    =  model_states_msg_.twist[nubot_index_].angular.y;
+        nubot_state_.twist.angular.z    =  model_states_msg_.twist[nubot_index_].angular.z;
+
+//        debug_msgs_.data.clear();
+//        debug_msgs_.data.push_back(scalar*rand_.GetDblNormal(0,1));
+//        debug_pub_.publish(debug_msgs_);
+
+        // calculate vector from nubot to football
+        nubot_football_vector_ = football_state_.pose.position - nubot_state_.pose.position;
+        nubot_football_vector_length_ = nubot_football_vector_.GetLength();
+        //ROS_INFO("nubot_football_vector_length_:%f", nubot_football_vector_length_);
+
+        // transform kick_vector_nubot in world frame
+        math::Quaternion    rotation_quaternion = nubot_state_.pose.orientation;
+        math::Matrix3       RotationMatrix3 = rotation_quaternion.GetAsMatrix3();
+        kick_vector_world_ = RotationMatrix3 * kick_vector_nubot; // vector from nubot origin to kicking mechanism in world frame
+        // ROS_INFO("kick_vector_world_: %f %f %f",kick_vector_world_.x, kick_vector_world_.y, kick_vector_world_.z);
+
+        std::string             sub_str;
+        std::string             robot_name;
+        geometry_msgs::Pose     robot_pose;
+        geometry_msgs::Twist    robot_twist;
+        int robot_id;
+        obstacles_->world_obstacles_.reserve(20);
+        obstacles_->real_obstacles_.reserve(20);
+        obstacles_->world_obstacles_.clear();
+        obstacles_->real_obstacles_.clear();
+        omin_vision_info_.robotinfo.reserve(10);
+        omin_vision_info_.robotinfo.clear();
+        for(int i=0; i<model_count_;i++)
+        {
+            // Obstacles info
+            if(model_states_msg_.name[i].compare(0, nubot_prefix_.size(), nubot_prefix_) == 0 ||
+                    model_states_msg_.name[i].compare(0, rival_prefix_.size(), rival_prefix_) == 0)   //compare model name' prefix to determine robots
+            {
+                math::Vector3 obstacle_position(model_states_msg_.pose[i].position.x + noise(scale),
+                                                model_states_msg_.pose[i].position.y + noise(scale),
+                                                model_states_msg_.pose[i].position.z);
+                if(i != nubot_index_)
+                {
+                    obstacles_->world_obstacles_.push_back(nubot::DPoint(obstacle_position.x,
+                                                                         obstacle_position.y));
+
+                    math::Vector3 nubot_obstacle_vector = obstacle_position - nubot_state_.pose.position;   // vector from nubot to obstacle
+                    obstacles_->real_obstacles_.push_back( nubot::PPoint( get_angle_PI(kick_vector_world_,nubot_obstacle_vector),
+                                                                          nubot_obstacle_vector.GetLength()) );
+                }
+            }
+
+            // Nubot info
+            if(model_states_msg_.name[i].compare(0, nubot_prefix_.size(), nubot_prefix_) == 0)
+            {
+                robot_name = model_states_msg_.name[i];
+                sub_str = robot_name.substr(nubot_prefix_.size(),robot_name.size()-nubot_prefix_.size());    // get the robot id
+                robot_id = atoi( sub_str.c_str() );
+
+                // get my own and teammates's info
+                robot_pose = model_states_msg_.pose[i];
+                robot_twist = model_states_msg_.twist[i];
+                math::Quaternion rot_qua(robot_pose.orientation.w, robot_pose.orientation.x,
+                                          robot_pose.orientation.y, robot_pose.orientation.z);
+                double heading_theta = rot_qua.GetYaw();
+                robot_info_.header.seq++;
+                robot_info_.header.stamp = ros::Time::now();
+                robot_info_.AgentID       = robot_id;
+                robot_info_.pos.x         = robot_pose.position.x * M2CM_CONVERSION;
+                robot_info_.pos.y         = robot_pose.position.y * M2CM_CONVERSION;
+                robot_info_.heading.theta = heading_theta;
+                robot_info_.vrot          = robot_twist.angular.z;
+                robot_info_.vtrans.x      = robot_twist.linear.x * M2CM_CONVERSION;
+                //robot_info_.isvalid       = true;
+                robot_info_.isvalid       =  is_robot_valid(robot_pose.position.x, robot_pose.position.y);
+                robot_info_.vtrans.y      = robot_twist.linear.y * M2CM_CONVERSION;
+                robot_info_.isstuck       = get_nubot_stuck();
+                omin_vision_info_.robotinfo.push_back(robot_info_);
+
+            }
+        }
+        return 1;
+#endif
    }
    else
    {
         ROS_INFO("%s update_model_info(): Waiting for model_states messages!", model_name_.c_str());
        return 0;
    }
+}
+
+double NubotGazebo::noise(double scale, double probability)
+{
+    if(rand_.GetIntUniform(0,10) <= (int)10.0*probability)
+        return scale*rand_.GetDblNormal(0,1);
+    else
+        return 0.0;
 }
 
 void NubotGazebo::message_publish(void)
