@@ -5,7 +5,7 @@ general:
 
 cyan:
   prefix: "nubot"             # Nubot name prefix. Linked with model name; don't change
-  num: 2
+  num: 0
  
 magenta:
   prefix: "rival"            # Rival name prefix. Linked with model name; don't change
@@ -17,5 +17,5 @@ field:
   
 football:
   name: "football"                   # football model name
-  chassis_link: "football::ball"     # football body link name  
+  chassis_link: "football::chassis"     # football body link name  
 
