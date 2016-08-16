@@ -6,6 +6,4 @@ Welcome anyone to add somthing to this list or pick some items from it and contr
 4. show role labels beside each robot; show the positioning points; (medium)
 5. set up a virtule runtime environment; refer to Matlab's support for RoboCup; (hard)
 6. automatic referee. (hard)
-7. enable adding and removing robot models. (hard)
-8. Use a sdf element to determine our or opponent's Gazebo plugins instead of creating two almost-the-same plugin files. (nubot_gazebo.cc and rival_gazebo.cc) (easy)
-9. Do not subscribe to the simulation information in the gazebo plugin; it is not necessary. (easy)
+7. Do not subscribe to the simulation information in the gazebo plugin; it is not necessary. (easy)

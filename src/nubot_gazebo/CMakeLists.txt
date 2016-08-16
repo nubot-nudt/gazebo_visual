@@ -23,7 +23,7 @@ generate_dynamic_reconfigure_options(config/nubot_gazebo.cfg)
 link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
-message("gazebo include path: ${GAZEBO_INCLUDE_DIRS}")
+message("gazebo include path  : ${GAZEBO_INCLUDE_DIRS}")
 
 catkin_package(
   CATKIN_DEPENDS 
@@ -38,9 +38,6 @@ catkin_package(
 add_library(nubot_gazebo src/nubot_gazebo.cc)
 target_link_libraries(nubot_gazebo ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} pthread)
 add_dependencies(nubot_gazebo ${PROJECT_NAME}_gencfg)
-
-add_library(rival_gazebo src/rival_gazebo.cc)
-target_link_libraries(rival_gazebo ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} pthread)
 
 add_library(ball_gazebo src/ball_gazebo.cc)
 target_link_libraries(ball_gazebo ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})

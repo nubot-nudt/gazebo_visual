@@ -1,11 +1,13 @@
 # Uses ISO units. For example, use 'm' for length.
 general:
   dribble_distance_thres: 0.50           # theshold distance between nubot and football below which dribble ball
-  dribble_angle_thres: 30.0             # kicking mechanism aligning with football; allowed maximum angle error in degrees
+  dribble_angle_thres: 30.0              # kicking mechanism aligning with football; allowed maximum angle error in degrees
+  noise_scale: 0.00                     # the scale of gaussian noise (m)
+  noise_rate: 0.01                       # how frequent the noise generates
 
 cyan:
   prefix: "nubot"             # Nubot name prefix. Linked with model name; don't change
-  num: 2
+  num: 0
  
 magenta:
   prefix: "rival"            # Rival name prefix. Linked with model name; don't change
@@ -17,5 +19,5 @@ field:
   
 football:
   name: "football"                   # football model name
-  chassis_link: "football::ball"     # football body link name  
+  chassis_link: "football::chassis"     # football body link name  
 
