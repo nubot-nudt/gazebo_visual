@@ -1,7 +1,7 @@
 # Note: This is for SIMULATION. The following packages should be used together:
 1. gazebo_visual                    # for gazebo visulization
 2. nubot_ws			                # for real robot code
-3. coach_ws_no_rtdb		            # for sending game command such as kickoff to robots; this does not require rtdb
+3. coach4sim		            # for sending game command such as kickoff to robots; this does not require rtdb
 
 # Configuration of computer A and computer B
 
@@ -19,28 +19,19 @@ e.g. In computer B, ` $ export ROS_MASTER_URI=http://Bart:11311`
 3. In computer B, run coach and send game command
 
 ## Compiling nubot_ws
-### Method 1:
 1. $ sudo chmod +x configure
 2. $ ./configure
-3. $ catkin_make --pkg nubot_common
-4. $ catkin_make --pkg world_model
-5. $ catkin_make
+3. $ catkin_make
 
-### Method 2:
-$ catkin_make -j1
-
-## To run nubot_ws
-1. $ export AGENT=1
-2. if rtdb is not used, go to step 3; otherwise, run this command: 
-   $ rosrun world_model comm
-3. $ ./cyan_spawn_model.sh   or   $ ./magenta_spawn_model.sh
+## To run nubot_ws   
+` $ ./cyan_spawn_model.sh   or   $ ./magenta_spawn_model.sh`   
 
 ## To run gazeo_visual
 1. ./configure
 2. $ roslaunch nubot_gazebo game_ready.launch
 You can edit global_config to change simulation parameters such as the number of robots
 
-## To run coach_ws_no_rtdb
+## To run coach4sim
 1. $ roslaunch nubot_coach nubot_coach.launch
 
 
