@@ -1,3 +1,13 @@
+# Package Summary   
+
+- Maintainer status: maintained
+- Maintainer: Weijia Yao <abcgarden@126.com>
+- Author: Weijia Yao <abcgarden@126.com>
+- License: Apache
+- Bug / feature tracker: https://github.com/nubot-nudt/gazebo_visual/issues
+- Source: git https://github.com/nubot-nudt/gazebo_visual (branch: master)
+
+
 # Note: This is for SIMULATION. The following packages should be used together:
 1. gazebo_visual                    # for gazebo visulization
 2. nubot_ws			                # for real robot code
