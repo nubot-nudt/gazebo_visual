@@ -238,11 +238,8 @@ void NubotGazebo::model_states_CB(const gazebo_msgs::ModelStates::ConstPtr& _msg
 {
     msgCB_lock_.lock();
 
-    rosnode_->param("/general/noise_scale",             noise_scale_,               0.10);
-    rosnode_->param("/general/noise_rate",              noise_rate_,                0.01);
     ModelStatesCB_flag_ = true;
     model_count_ = 0;
-
     model_states_.name.clear();
     model_states_.pose.clear();
     model_states_.twist.clear();
@@ -292,9 +289,6 @@ void NubotGazebo::model_states_CB(const gazebo_msgs::ModelStates::ConstPtr& _msg
 
 bool NubotGazebo::update_model_info(void)
 {
-    rosnode_->param("/general/dribble_distance_thres",    dribble_distance_thres_,    0.50);
-    rosnode_->param("/general/dribble_angle_thres",      dribble_angle_thres_,      30.0);
-
     if(ModelStatesCB_flag_)
     {
         // Get football and nubot's pose and twist
