@@ -99,16 +99,16 @@ void NubotGazebo::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
         return;
     }
     rosnode_ = new ros::NodeHandle(robot_namespace_);
-    rosnode_->param("/football/name",                   ball_name_,             std::string("football") );
-    rosnode_->param("/football/chassis_link",           ball_chassis_,          std::string("football::ball") );
-    rosnode_->param("/cyan/prefix",                     cyan_pre_,              std::string("nubot"));
-    rosnode_->param("/magenta/prefix",                  mag_pre_,              std::string("rival"));
-    rosnode_->param("/general/dribble_distance_thres",  dribble_distance_thres_,    0.50);
-    rosnode_->param("/general/dribble_angle_thres",     dribble_angle_thres_,       30.0);
-    rosnode_->param("/field/length",                    field_length_,              18.0);
-    rosnode_->param("/field/width",                     field_width_,               12.0);
-    rosnode_->param("/general/noise_scale",             noise_scale_,               0.10);
-    rosnode_->param("/general/noise_rate",              noise_rate_,                0.01);
+    rosnode_->param<std::string>("/football/name",                   ball_name_,             std::string("football") );
+    rosnode_->param<std::string>("/football/chassis_link",           ball_chassis_,          std::string("football::ball") );
+    rosnode_->param<std::string>("/cyan/prefix",                     cyan_pre_,              std::string("nubot"));
+    rosnode_->param<std::string>("/magenta/prefix",                  mag_pre_,              std::string("rival"));
+    rosnode_->param<double>("/general/dribble_distance_thres",  dribble_distance_thres_,    0.50);
+    rosnode_->param<double>("/general/dribble_angle_thres",     dribble_angle_thres_,       30.0);
+    rosnode_->param<double>("/field/length",                    field_length_,              18.0);
+    rosnode_->param<double>("/field/width",                     field_width_,               12.0);
+    rosnode_->param<double>("/general/noise_scale",             noise_scale_,               0.10);
+    rosnode_->param<double>("/general/noise_rate",              noise_rate_,                0.01);
 
     if(!_sdf->HasElement("flip_cord"))
     {
