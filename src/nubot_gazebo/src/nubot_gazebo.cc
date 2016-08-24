@@ -47,8 +47,6 @@ NubotGazebo::NubotGazebo()
     ModelStatesCB_flag_ = false;
     judge_nubot_stuck_ = false;
     is_kick_ = false;
-    is_hold_ball_ = false;
-    ball_decay_flag_=false;
     flip_cord_ = false;
     AgentID_ = 0;
     noise_scale_ = 0.0;
@@ -186,19 +184,14 @@ void NubotGazebo::Reset()
     nubot_ball_vec_ = math::Vector3(1,0,0);
     kick_vector_world_ = kick_vector_robot;
     nubot_ball_vec_len_ = 1;
-    ball_index_=robot_index_=0;
     Vx_cmd_=Vy_cmd_=w_cmd_=0;
     force_ = 0.0; mode_=1;
 
-    model_count_ = 0;
     dribble_flag_ = false;
     shot_flag_ = false;
     ModelStatesCB_flag_ = false;
     judge_nubot_stuck_ = false;
     is_kick_ = false;
-    is_hold_ball_ = false;
-    ball_decay_flag_=false;
-    AgentID_ = 0;
     state_ = CHASE_BALL;
     sub_state_ = MOVE_BALL;
 
