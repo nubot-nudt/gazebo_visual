@@ -15,6 +15,37 @@ package|description|
 [nubot_ws](https://github.com/nubot-nudt/nubot_ws)  | For real robot code |
 [coach4sim](https://github.com/nubot-nudt/coach4sim)	| For sending game command such as kickoff to robots; this does not require rtdb |
 
+**Note**   
+If you want to use coach4sim, you need to install Qt. For those who don't want to install Qt, a solution is using command line to send game commands as follows:    
+In another terminal, input the following to send a game command:   
+```    
+rostopic pub -r 1 /nubot/receive_from_coach  nubot_common/CoachInfo "
+MatchMode: 10
+MatchType: 0" 
+```   
+  Indeed, when you input until nubot_common/CoachInfo, you could press 'Tab' twice and then the whole definition of the message would show up. Then you could fill up the message. However, you only need to fill in two fields: 'MatchMode' and 'MatchType', where 'MatchMode' is the current game command, 'MatchType' is the previous game command. The coding of the game commands is in core.hpp. For quick reference:   
+```   
+enum MatchMode {
+                  STOPROBOT  =  0,
+                  OUR_KICKOFF = 1,
+                  OPP_KICKOFF = 2,
+                  OUR_THROWIN = 3,
+                  OPP_THROWIN = 4,
+                  OUR_PENALTY = 5,
+                  OPP_PENALTY = 6,
+                  OUR_GOALKICK = 7 ,
+                  OPP_GOALKICK = 8,
+                  OUR_CORNERKICK = 9,
+                  OPP_CORNERKICK = 10,
+                  OUR_FREEKICK = 11,
+                  OPP_FREEKICK = 12,
+                  DROPBALL     = 13,
+                  STARTROBOT   = 15,
+                  PARKINGROBOT = 25,
+                  TEST = 27
+                };
+```   
+
 # Configuration of computer A and computer B
 
 >   The recommended way to run simulation is with two computers running nubot_ws and gazebo_visual seperately.
