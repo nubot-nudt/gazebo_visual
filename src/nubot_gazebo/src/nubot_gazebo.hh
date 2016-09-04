@@ -147,8 +147,6 @@ namespace gazebo{
         bool                        ModelStatesCB_flag_;         // Indicate receiving messages
         bool                        judge_nubot_stuck_;          // decide when to judge
         bool                        is_kick_;
-        bool                        is_hold_ball_;
-        bool                        ball_decay_flag_;
         bool                        flip_cord_;                 // flip the coordinate frame
 
         int                         AgentID_;
