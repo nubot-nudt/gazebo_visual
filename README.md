@@ -9,9 +9,11 @@
 
 
 # Note: This is for SIMULATION. The following packages should be used together:
-1. gazebo_visual                    # for gazebo visulization
-2. nubot_ws			                # for real robot code
-3. coach4sim		            # for sending game command such as kickoff to robots; this does not require rtdb
+package|description|
+:------|:----------|
+[gazebo_visual](https://github.com/nubot-nudt/gazebo_visual) | For gazebo visulization |
+[nubot_ws](https://github.com/nubot-nudt/nubot_ws)  | For real robot code |
+[coach4sim](https://github.com/nubot-nudt/coach4sim)	| For sending game command such as kickoff to robots; this does not require rtdb |
 
 # Configuration of computer A and computer B
 
@@ -28,34 +30,22 @@ e.g. In computer A, `$ sudo gedit /etc/hosts and add "Maggie 192.168.8.100"`
 e.g. In computer B, ` $ export ROS_MASTER_URI=http://Bart:11311`
 3. In computer B, run coach and send game command
 
-## Compiling nubot_ws
-1. $ sudo chmod +x configure
-2. $ ./configure
-3. $ catkin_make
+## To run gazeo_visual
+1. `./configure `   
+2. `$ source devel/setup.bash`   
+2. `$ roslaunch nubot_gazebo game_ready.launch`   	
+You can edit global_config to change simulation parameters such as the number of robots   
 
 ## To run nubot_ws   
-` $ ./cyan_spawn_model.sh   or   $ ./magenta_spawn_model.sh`   
-
-## To run gazeo_visual
-1. ./configure
-2. $ roslaunch nubot_gazebo game_ready.launch
-You can edit global_config to change simulation parameters such as the number of robots
+` $ ./src/cyan_spawn_model.sh`      
+or   
+` $ ./src/magenta_spawn_model.sh`    
 
 ## To run coach4sim
-1. $ roslaunch nubot_coach nubot_coach.launch
+1. `$ source devel/setup.bash`   
+2. ` $ roslaunch nubot_coach cyan_sim.launch`   
+or    
+` $ roslaunch nubot_coach magenta_sim.launch`   
 
 
-> **NOTE:** if used with RTDB, then you should change absolute path in rtdb files:
 
-> 1. rtdb/parser/CMakeLists.txt:
-
->    (1) SET(RTDB_USER_H_FILE   /home/nubot8/nubot_ws/src/nubot/world_model/include/nubot/rtdb/rtdb_user.h)
-
->    (2) SET(RTDB_INI_FILE      /home/nubot8/nubot_ws/src/nubot/world_model/config/rtdb.ini )
-
->    (3) SET(RTDB_Config_FILE   /home/nubot8/nubot_ws/src/nubot/world_model/config/rtdb.config )
-
-> 2. rtdb/rtdb_api.cpp:    
->    std::string ini_config_file="/home/nubot8/nubot_ws/src/nubot/world_model/config/rtdb.ini";
-> 3. rtdb/comm.cpp: 'wlano' or 'wlan1'
-> 4. coach_info_pub.cpp: DB_get(AGENT), this AGENT depends your coach's agent number
