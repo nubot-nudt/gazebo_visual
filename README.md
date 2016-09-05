@@ -68,7 +68,7 @@ For the definition of "**/BallHandle**" service, when "enable" equals to a non-z
    
 For the definition of "**/Shoot**" service, when "ShootPos" equals to -1, this is a ground pass. In this case, "strength" is the inital speed you would like the soccer ball to have. When "ShootPos" equals to 1, this is a lob shot. In this case, "strength" is useless since the strength is calculated by the Gazebo plugin automatically and the soccer ball would follow a parabola path to enter the goal area. If the robot successfully kicks the ball out even if it failed to goal, the service response "ShootIsDone" is true.   
 
-For the definition of the "**omnivision/OmniVisionInfo**" topic, there are three new message types: "BallInfo", "ObstaclesInfo" and "RoboInfo". The field "robotinfo" is a vector. Before introducing the format of these new messages, two other message types "Point2d" and "PPoint" are used in their definitions:   
+For the definition of the "**omnivision/OmniVisionInfo**" topic, there are three new message types: "BallInfo", "ObstaclesInfo" and "RoboInfo". The field "robotinfo" is a vector. Before introducing the format of these new messages, three other message types "Point2d", "PPoint" and "Angle" are used in their definitions:   
 ```
 # Point2d.msg, reperesenting a 2-D point.
 float32 x				# x component
@@ -79,6 +79,11 @@ float32 y				# y component
 # PPoint.msg, representing a 2-D point in polar coordinates.
 float32 angle				# angle against polar axis
 float32 radius				# distance from the origin
+```
+
+```
+# Angle.msg, representing the angle
+float32 theta				# angle of rotation
 ```
 -----------------------------------   
    
@@ -127,6 +132,8 @@ char     current_role                   # the current role
 float32  role_time                      # time that the robot keeps the role unchanged
 Point2d  target	                        # target position
 ```
+   
+The units of these elements are cm, cm/s, rad and rad/s.    
    
 # Configuration of computer A and computer B
 
