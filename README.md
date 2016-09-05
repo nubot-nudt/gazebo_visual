@@ -68,7 +68,7 @@ For the definition of "**/BallHandle**" service, when "enable" equals to a non-z
    
 For the definition of "**/Shoot**" service, when "ShootPos" equals to -1, this is a ground pass. In this case, "strength" is the inital speed you would like the soccer ball to have. When "ShootPos" equals to 1, this is a lob shot. In this case, "strength" is useless since the strength is calculated by the Gazebo plugin automatically and the soccer ball would follow a parabola path to enter the goal area. If the robot successfully kicks the ball out even if it failed to goal, the service response "ShootIsDone" is true.   
 
-For the definition of the "**omnivision/OmniVisionInfo**" topic, there are three new message types: "BallInfo", "ObstaclesInfo" and "RoboInfo". The field ¡°robotinfo¡± is a vector consited of information of all the robots present on the field. Before introducing the format of these new messages, two other message types "Point2d" and "PPoint" are used in their definitions. :   
+For the definition of the "**omnivision/OmniVisionInfo**" topic, there are three new message types: "BallInfo", "ObstaclesInfo" and "RoboInfo". The field "robotinfo" is a vector. Before introducing the format of these new messages, two other message types "Point2d" and "PPoint" are used in their definitions:   
 ```
 # Point2d.msg	The message is used to reperesent a 2-D point.
 float32 x				# x component
@@ -80,30 +80,33 @@ float32 y				# y component
 float32 angle				# angle against polar axis
 float32 radius				# distance from the origin
 ```
-   
+-----------------------------------   
    
 ```
-# BallInfo.msg	The message is used to represent the information about the ball
+# BallInfo.msg, representing the information about the ball
 Header header				# a ROS header message defined by ROS package std_msgs
 int32     ballinfostate			# the state of the ball information; 
-Point2d   pos				# ball position in global reference frame; the origin of the frame is the center of the soccer field; x-axis pointed horizentally towards the opponet's center of the 
+Point2d   pos				# ball position in global reference frame; the origin of the frame is the center of
+					# the soccer field; x-axis pointed horizentally towards the opponet's center of the
 					# goal area and y-axis vertiacal to the x-axis using the right-hand rule
-PPoint    real_pos			# ball relative position in robot body frame; the origin of the body frame is the center of the robot base; x-axis along the kicking-mechanism and y-axis vertical to 
-					# the x-axis using the right-hand rule
+PPoint    real_pos			# ball relative position in robot body frame; the origin of the body frame is the
+					# center of the robot base; x-axis along the kicking-mechanism and y-axis vertical
+					# to the x-axis using the right-hand rule
 Point2d   velocity			# ball velocity in global reference frame
 bool      pos_known			# ball position is known(1) or not(0)
 bool      velocity_known		# ball velocity is known(1) or not(0)
 ```
 
 ```
-# ObstaclesInfo.msg	The message is used to represent the information about obstacles
+# ObstaclesInfo.msg, representing the information about obstacles
 Header header				# a ROS header message defined by ROS package std_msgs
 Point2d[] pos				# obstacle position in global reference frame
-PPoint[] polar_pos			# obstable position in the polar frame of which the origin is the center of the robot and the polar axis is along the kicking mechanism
+PPoint[] polar_pos			# obstable position in the polar frame of which the origin is the center of the
+					# robot and the polar axis is along the kicking mechanism
 ```
    
 ```
-# RobotInfo.msg		The message is used to represent teammates' information
+# RobotInfo.msg, representing teammates' information
 Header header				# a ROS header message defined by ROS package std_msgs
 int32    AgentID			# ID of the robot
 int32    targetNum1			# robot ID to be assigned target position 1
