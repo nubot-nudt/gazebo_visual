@@ -1,3 +1,4 @@
+![simatch][pic1]
 # Package Summary   
 
 - Maintainer status: maintained
@@ -14,9 +15,9 @@
 
 package|description|
 :------|:----------|
-[gazebo_visual](https://github.com/nubot-nudt/gazebo_visual) | For gazebo visulization |
-[nubot_ws](https://github.com/nubot-nudt/nubot_ws)  | For real robot code |
-[coach4sim](https://github.com/nubot-nudt/coach4sim)	| For sending game command such as kickoff to robots; this does not require rtdb |   
+[gazebo_visual][1] | For gazebo visulization |
+[nubot_ws][2]  | For real robot code |
+[coach4sim][3]	| For sending game command such as kickoff to robots; this does not require rtdb |   
 
 **Kind remind**   
 If you want to use coach4sim, you need to install Qt. For those who don't want to install Qt, a solution is using command line to send game commands as follows:    
@@ -59,7 +60,7 @@ The gazebo plugin(single_nubot_gazebo) subscribes to topic **"nubotcontrol/velcm
 Topic/Service	|	Type	|	Definition |
 :-------------: |:-------:|:------------|
 **/nubot1/nubotcontrol/velcmd**	|	nubot_common/VelCmd 	|	float32 Vx <br> float32 Vy <br>  float32 w   |
-**/nubot1/omnivision/OmniVisionInfo** | ubot_common/OminiVisionInfo | Header header <br> [BallInfo](https://github.com/nubot-nudt/gazebo_visual/blob/master/src/nubot_common/msgs/BallInfo.msg) ballinfo <br> [ObstaclesInfo](https://github.com/nubot-nudt/gazebo_visual/blob/master/src/nubot_common/msgs/ObstaclesInfo.msg) obstacleinfo <br> [RobotInfo](https://github.com/nubot-nudt/gazebo_visual/blob/master/src/nubot_common/msgs/RobotInfo.msg)[]  robotinfo |
+**/nubot1/omnivision/OmniVisionInfo** | ubot_common/OminiVisionInfo | Header header <br> [BallInfo][4] ballinfo <br> [ObstaclesInfo][5] obstacleinfo <br> [RobotInfo][6][]  robotinfo |
 **/nubot1/BallHandle**   |  nubot_common/BallHandle       |  int64 enable <br> --- <br>  int64 BallIsHolding |
 **/nubot1/Shoot**        |  nubot_common/Shoot            | int64 strength <br> int64 ShootPos <br>  --- <br> int64 ShootIsDone |   
    
@@ -69,25 +70,25 @@ For the definition of "**/BallHandle**" service, when "enable" equals to a non-z
 For the definition of "**/Shoot**" service, when "ShootPos" equals to -1, this is a ground pass. In this case, "strength" is the inital speed you would like the soccer ball to have. When "ShootPos" equals to 1, this is a lob shot. In this case, "strength" is useless since the strength is calculated by the Gazebo plugin automatically and the soccer ball would follow a parabola path to enter the goal area. If the robot successfully kicks the ball out even if it failed to goal, the service response "ShootIsDone" is true.   
 
 For the definition of the "**omnivision/OmniVisionInfo**" topic, there are three new message types: "BallInfo", "ObstaclesInfo" and "RoboInfo". The field "robotinfo" is a vector. Before introducing the format of these new messages, three other message types "Point2d", "PPoint" and "Angle" are used in their definitions:   
-```
+```bash
 # Point2d.msg, reperesenting a 2-D point.
 float32 x				# x component
 float32 y				# y component
 ```
    
-```
+```bash
 # PPoint.msg, representing a 2-D point in polar coordinates.
 float32 angle				# angle against polar axis
 float32 radius				# distance from the origin
 ```
 
-```
+```bash
 # Angle.msg, representing the angle
 float32 theta				# angle of rotation
 ```
 -----------------------------------   
    
-```
+```bash
 # BallInfo.msg, representing the information about the ball
 Header header                           # a ROS header message defined by ROS package std_msgs
 int32     ballinfostate	                # the state of the ball information; 
@@ -102,7 +103,7 @@ bool      pos_known                     # ball position is known(1) or not(0)
 bool      velocity_known                # ball velocity is known(1) or not(0)
 ```
 
-```
+```bash
 # ObstaclesInfo.msg, representing the information about obstacles
 Header header                           # a ROS header message defined by ROS package std_msgs
 Point2d[] pos                           # obstacle position in global reference frame
@@ -110,7 +111,7 @@ PPoint[] polar_pos                      # obstable position in the polar frame o
                                         # robot and the polar axis is along the kicking mechanism
 ```
    
-```
+```bash
 # RobotInfo.msg, representing teammates' information
 Header header                           # a ROS header message defined by ROS package std_msgs
 int32    AgentID                        # ID of the robot
@@ -136,7 +137,7 @@ Point2d  target	                        # target position
 The units of these elements are cm, cm/s, rad and rad/s.    
    
 # Configuration of computer A and computer B
-
+![config][pic2]
 >   The recommended way to run simulation is with two computers running nubot_ws and gazebo_visual seperately.
 
 > For example,computer A runs gazebo_visual to display the movement of robots. Computer B runs nubot_ws to calculate and send  movement commands to robots. In addition, computer B should also run coach to send game command such as game start. 
@@ -167,5 +168,13 @@ or
 or    
 ` $ roslaunch nubot_coach magenta_sim.launch`   
 
+[1]: https://github.com/nubot-nudt/gazebo_visual
+[2]: https://github.com/nubot-nudt/nubot_ws
+[3]: https://github.com/nubot-nudt/coach4sim
+[4]: src/nubot_common/msgs/BallInfo.msg
+[5]: src/nubot_common/msgs/ObstaclesInfo.msg
+[6]: src/nubot_common/msgs/RobotInfo.msg
+[pic1]: pics/simatch.png
+[pic2]: pics/multi-computers.png
 
 
