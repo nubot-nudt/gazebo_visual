@@ -11,7 +11,8 @@
 
 # Overview   
 
-**Note:** This is for SIMULATION. The following packages should be used together:   
+**Note:** This is for SIMULATION. The following packages should be used together:    
+> However, if you find this cumbersome or difficult, you could also refer to this repository ["simatch"][7] which is an optimized combination of these packages with simple user configuration. Although the repository ["simatch"][7] is used directly for the China Robotics Competition Middle Size Simulation League, which aims to promote the development of multi-robot coordination research, it could also be utilized for other research purposes.  
 
 package|description|
 :------|:----------|
@@ -174,6 +175,7 @@ or
 [4]: src/nubot_common/msgs/BallInfo.msg
 [5]: src/nubot_common/msgs/ObstaclesInfo.msg
 [6]: src/nubot_common/msgs/RobotInfo.msg
+[7]: https://github.com/nubot-nudt/simatch
 [pic1]: pics/simatch.png
 [pic2]: pics/multi-computers.png
 
