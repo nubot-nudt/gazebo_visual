@@ -7,5 +7,6 @@ Welcome anyone to add somthing to this list or pick some items from it and contr
 5. set up a virtule runtime environment; refer to Matlab's support for RoboCup; (hard)
 6. automatic referee. (hard)
 7. Do not subscribe to the simulation information in the gazebo plugin; it is not necessary. (easy)
-8. Try to get rid of installing gazebo_ros_pkgs; implement necessary parts in this package. (hard)
-9. Try to run the simulation with/without GUI. (easy)
+8. Programmatically change the meshes of models instead of creating several similar models. (medium)
+9. Try to get rid of installing gazebo_ros_pkgs; implement necessary parts in this package. (hard)
+10. Try to run the simulation with/without GUI. (easy)
