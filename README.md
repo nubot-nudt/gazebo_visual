@@ -159,6 +159,8 @@ e.g. In computer B, ` $ export ROS_MASTER_URI=http://Bart:11311`
 You can edit global_config to change simulation parameters such as the number of robots   
 
 ## To run nubot_ws   
+**Note: Please remember to set the SIMULATION flag first!** About how to set this flag, please refer to the documentation of nubot_ws.   
+  
 ` $ ./src/cyan_spawn_model.sh`      
 or   
 ` $ ./src/magenta_spawn_model.sh`    
