@@ -2,8 +2,8 @@
 # Package Summary   
 
 - Maintainer status: maintained
-- Maintainer: Weijia Yao <weijia.yao.nudt <AT> gmail.com>
-- Author: Weijia Yao <weijia.yao.nudt <AT> gmail.com>
+- Maintainer: Weijia Yao <weijia.yao.nudt@gmail.com>
+- Author: Weijia Yao <weijia.yao.nudt@gmail.com>
 - License: Apache
 - Bug / feature tracker: https://github.com/nubot-nudt/gazebo_visual/issues
 - Source: git https://github.com/nubot-nudt/gazebo_visual (branch: master)
