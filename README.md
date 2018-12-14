@@ -171,6 +171,29 @@ or
 or    
 ` $ roslaunch nubot_coach magenta_sim.launch`   
 
+# Citation
+If you use this simulation system, please cite our work.
+
+```
+@inproceedings{yao2015simulation,
+  title={A simulation system based on ros and gazebo for robocup middle size league},
+  author={Yao, Weijia and Dai, Wei and Xiao, Junhao and Lu, Huimin and Zheng, Zhiqiang},
+  booktitle={Robotics and Biomimetics (ROBIO), 2015 IEEE International Conference on},
+  pages={54--59},
+  year={2015},
+  organization={IEEE}
+}
+
+@incollection{xiao2017building,
+  title={Building software system and simulation environment for robocup Msl soccer robots based on ros and gazebo},
+  author={Xiao, Junhao and Xiong, Dan and Yao, Weijia and Yu, Qinghua and Lu, Huimin and Zheng, Zhiqiang},
+  booktitle={Robot operating system (ROS)},
+  pages={597--631},
+  year={2017},
+  publisher={Springer}
+}
+```
+
 [1]: https://github.com/nubot-nudt/gazebo_visual
 [2]: https://github.com/nubot-nudt/nubot_ws
 [3]: https://github.com/nubot-nudt/coach4sim
